@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home - Caregivers Platform{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>Welcome to Caregivers Platform</h1>
+    <p>Manage caregivers, members, appointments, and job postings</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">Users</h2>
+        <p style="margin-bottom: 1rem;">Manage all platform users</p>
+        <a href="{{ url_for('list_users') }}" class="btn btn-primary">View Users</a>
+    </div>
+    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">Caregivers</h2>
+        <p style="margin-bottom: 1rem;">Browse and manage caregivers</p>
+        <a href="{{ url_for('list_caregivers') }}" class="btn btn-primary">View Caregivers</a>
+    </div>
+    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">Appointments</h2>
+        <p style="margin-bottom: 1rem;">View and schedule appointments</p>
+        <a href="{{ url_for('list_appointments') }}" class="btn btn-primary">View Appointments</a>
+    </div>
+    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">Jobs</h2>
+        <p style="margin-bottom: 1rem;">Manage job postings</p>
+        <a href="{{ url_for('list_jobs') }}" class="btn btn-primary">View Jobs</a>
+    </div>
+</div>
+{% endblock %}

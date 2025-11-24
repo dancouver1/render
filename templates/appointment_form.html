@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{% if appointment %}Edit Appointment{% else %}Schedule Appointment{% endif %} - Caregivers Platform{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>{% if appointment %}Edit Appointment{% else %}Schedule New Appointment{% endif %}</h1>
+</div>
+<div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <form method="POST">
+        {% if not appointment %}
+        <div class="form-group">
+            <label for="caregiver_user_id">Caregiver:</label>
+            <select id="caregiver_user_id" name="caregiver_user_id" required>
+                <option value="">-- Select Caregiver --</option>
+                {% for caregiver in caregivers %}
+                <option value="{{ caregiver.caregiver_user_id }}">{{ caregiver.given_name }} {{ caregiver.surname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="member_user_id">Member:</label>
+            <select id="member_user_id" name="member_user_id" required>
+                <option value="">-- Select Member --</option>
+                {% for member in members %}
+                <option value="{{ member.member_user_id }}">{{ member.given_name }} {{ member.surname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="appointment_date">Date:</label>
+            <input type="date" id="appointment_date" name="appointment_date" value="{{ appointment.appointment_date if appointment else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="appointment_time">Time:</label>
+            <input type="time" id="appointment_time" name="appointment_time" value="{{ appointment.appointment_time if appointment else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="work_hours">Work Hours:</label>
+            <input type="number" id="work_hours" name="work_hours" min="1" value="{{ appointment.work_hours if appointment else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="pending" {% if appointment and appointment.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="accepted" {% if appointment and appointment.status == 'accepted' %}selected{% endif %}>Accepted</option>
+                <option value="declined" {% if appointment and appointment.status == 'declined' %}selected{% endif %}>Declined</option>
+            </select>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">{% if appointment %}Update{% else %}Schedule{% endif %} Appointment</button>
+            <a href="{{ url_for('list_appointments') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

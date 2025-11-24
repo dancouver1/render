@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Post Job - Caregivers Platform{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>Post New Job</h1>
+</div>
+<div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <form method="POST">
+        <div class="form-group">
+            <label for="member_user_id">Posted By (Member):</label>
+            <select id="member_user_id" name="member_user_id" required>
+                <option value="">-- Select Member --</option>
+                {% for member in members %}
+                <option value="{{ member.member_user_id }}">{{ member.given_name }} {{ member.surname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="required_caregiving_type">Caregiving Type Required:</label>
+            <select id="required_caregiving_type" name="required_caregiving_type" required>
+                <option value="">-- Select Type --</option>
+                <option value="Babysitter">Babysitter</option>
+                <option value="Elderly Care">Elderly Care</option>
+                <option value="Playmate">Playmate</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="other_requirements">Other Requirements:</label>
+            <textarea id="other_requirements" name="other_requirements" placeholder="Describe specific requirements..."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="date_posted">Date Posted:</label>
+            <input type="date" id="date_posted" name="date_posted" required>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Post Job</button>
+            <a href="{{ url_for('list_jobs') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{% if user %}Edit User{% else %}Add User{% endif %} - Caregivers Platform{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>{% if user %}Edit User{% else %}Add New User{% endif %}</h1>
+</div>
+<div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <form method="POST">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ user.email if user else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="given_name">First Name:</label>
+            <input type="text" id="given_name" name="given_name" value="{{ user.given_name if user else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="surname">Last Name:</label>
+            <input type="text" id="surname" name="surname" value="{{ user.surname if user else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ user.city if user else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" value="{{ user.phone_number if user else '' }}" required>
+        </div>
+        <div class="form-group">
+            <label for="profile_description">Profile Description:</label>
+            <textarea id="profile_description" name="profile_description">{{ user.profile_description if user else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="{{ user.password if user else '' }}" required>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">{% if user %}Update{% else %}Add{% endif %} User</button>
+            <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

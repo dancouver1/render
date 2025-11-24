@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{% if caregiver %}Edit Caregiver{% else %}Add Caregiver{% endif %} - Caregivers Platform{% endblock %}
+{% block content %}
+<div class="header">
+    <h1>{% if caregiver %}Edit Caregiver{% else %}Add New Caregiver{% endif %}</h1>
+</div>
+<div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <form method="POST">
+        {% if not caregiver %}
+        <div class="form-group">
+            <label for="caregiver_user_id">Select User:</label>
+            <select id="caregiver_user_id" name="caregiver_user_id" required>
+                <option value="">-- Select User --</option>
+                {% for user in users %}
+                <option value="{{ user.user_id }}">{{ user.given_name }} {{ user.surname }} (ID: {{ user.user_id }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="photo">Photo URL:</label>
+            <input type="text" id="photo" name="photo" value="{{ caregiver.photo if caregiver else '' }}">
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">-- Select Gender --</option>
+                <option value="Male" {% if caregiver and caregiver.gender == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if caregiver and caregiver.gender == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Other" {% if caregiver and caregiver.gender == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="caregiving_type">Caregiving Type:</label>
+            <select id="caregiving_type" name="caregiving_type" required>
+                <option value="">-- Select Type --</option>
+                <option value="Babysitter" {% if caregiver and caregiver.caregiving_type == 'Babysitter' %}selected{% endif %}>Babysitter</option>
+                <option value="Elderly Care" {% if caregiver and caregiver.caregiving_type == 'Elderly Care' %}selected{% endif %}>Elderly Care</option>
+                <option value="Playmate" {% if caregiver and caregiver.caregiving_type == 'Playmate' %}selected{% endif %}>Playmate</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hourly_rate">Hourly Rate ($):</label>
+            <input type="number" step="0.01" id="hourly_rate" name="hourly_rate" value="{{ caregiver.hourly_rate if caregiver else '' }}" required>
+        </div>
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">{% if caregiver %}Update{% else %}Add{% endif %} Caregiver</button>
+            <a href="{{ url_for('list_caregivers') }}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
