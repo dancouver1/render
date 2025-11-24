@@ -4,15 +4,12 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
+app.secret_key = os.environ.get('SECRET_KEY', 'your_secret_key_here')
 
-DB_USER = 'postgres'
-DB_PASSWORD = '1234'
-DB_HOST = 'localhost'
-DB_PORT = '5432'
-DB_NAME = 'caregivers_db'
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-DATABASE_URL = f'postgresql+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
 engine = create_engine(DATABASE_URL, echo=False)
 
 @app.route('/')
@@ -336,3 +333,4 @@ def delete_job(job_id):
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
+
